@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8th Ave Tiny House &mdash; Design Brief</title>
+<style>
+  :root{
+    --basalt:      #17181a;
+    --basalt-2:    #201f22;
+    --paper:       #ede7da;
+    --paper-dim:   #d9d1bd;
+    --ohia:        #c5451f;
+    --ohia-dim:    #8a3417;
+    --moss:        #5b6b4f;
+    --moss-dim:    #414d38;
+    --line:        #3a3934;
+    --amber:       #c99a3c;
+
+    --serif: "Iowan Old Style", "Georgia", "Noto Serif", serif;
+    --mono:  "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans:  "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--basalt);font-family:var(--sans);line-height:1.55;}
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
+    background-image:repeating-linear-gradient(0deg,#000 0 1px,transparent 1px 3px),
+                      repeating-linear-gradient(90deg,#000 0 1px,transparent 1px 3px);
+    background-size:3px 3px;
+  }
+  .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 28px;}
+
+  .strip{background:var(--basalt);color:var(--paper-dim);font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:8px 0;}
+  .strip .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+  .strip strong{color:var(--paper);font-weight:600;}
+
+  header.hero{
+    background:var(--basalt);color:var(--paper);padding:70px 0 52px;position:relative;
+    overflow:hidden;border-bottom:6px solid var(--ohia);
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-140px;top:-140px;width:460px;height:460px;border-radius:50%;
+    background:radial-gradient(circle at center, rgba(197,69,31,.18), transparent 70%);
+  }
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0 0 14px;}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(36px,5.6vw,58px);line-height:1.04;margin:0 0 18px;letter-spacing:-.01em;}
+  h1 em{font-style:italic;color:var(--ohia);}
+  .hero-sub{font-size:16px;max-width:600px;color:var(--paper-dim);margin:0;}
+  .hero-cta{
+    display:inline-flex;gap:10px;align-items:center;margin-top:32px;
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;
+    color:var(--basalt);background:var(--amber);padding:11px 18px;text-decoration:none;
+  }
+
+  section{padding:56px 0;}
+  section+section{border-top:1px solid var(--line);}
+  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px;flex-wrap:wrap;}
+  h2{font-family:var(--serif);font-size:27px;font-weight:600;margin:0;letter-spacing:-.01em;}
+  .section-sub{font-family:var(--mono);font-size:12px;color:var(--moss-dim);margin-left:auto;}
+
+  /* wish list */
+  .wishlist{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:760px){.wishlist{grid-template-columns:1fr;}}
+  .wish{background:var(--paper);padding:26px 22px;}
+  .wish .icon{font-family:var(--serif);font-size:30px;color:var(--ohia);margin-bottom:10px;display:block;}
+  .wish h4{font-family:var(--serif);font-size:19px;margin:0 0 8px;font-weight:600;}
+  .wish p{font-size:13.5px;color:#3d3b34;margin:0;}
+
+  /* references */
+  .refs{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .ref{
+    background:var(--basalt);color:var(--paper);display:grid;grid-template-columns:64px 1fr auto;
+    align-items:center;gap:20px;padding:20px 24px;text-decoration:none;color:inherit;
+    transition:background .15s ease;
+  }
+  .ref:hover{background:#211f21;}
+  .ref .num{font-family:var(--mono);font-size:22px;color:var(--ohia);font-weight:600;}
+  .ref h4{font-family:var(--serif);font-size:18px;margin:0 0 5px;}
+  .ref p{font-size:12.5px;color:var(--paper-dim);margin:0;}
+  .ref .tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;}
+  .ref .tags span{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.08);padding:2px 7px;border-radius:2px;color:var(--paper-dim);}
+  .ref .arrow{font-family:var(--mono);font-size:13px;color:var(--amber);white-space:nowrap;}
+
+  /* direction */
+  .direction{
+    background:var(--basalt);color:var(--paper);padding:36px 34px;border:1px solid var(--line);
+  }
+  .direction p{font-size:15px;color:var(--paper-dim);margin:0 0 14px;}
+  .direction p:last-child{margin-bottom:0;}
+  .direction strong{color:var(--paper);}
+
+  /* constraints */
+  table.spec{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.spec th{
+    text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--paper);background:var(--basalt);padding:10px 12px;
+  }
+  table.spec td{padding:11px 12px;border-bottom:1px solid var(--paper-dim);}
+  table.spec tr:nth-child(even) td{background:#e4ded0;}
+
+  footer{
+    padding:40px 0 60px;font-family:var(--mono);font-size:11.5px;color:var(--moss-dim);text-align:center;
+  }
+  footer a{color:var(--ohia-dim);}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span>TMK <strong>3-1-5-051-153-0000</strong></span>
+    <span>Hawaiian Paradise Park &middot; Puna, Hawai&#8216;i Island</span>
+    <span>Kilauea Construction LLC</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Design Brief &middot; Open for Bid</p>
+    <h1>Two Tiny Houses<br>on <em>an ʻŌhiʻa Lot</em></h1>
+    <p class="hero-sub">A flat, lightly-brushed HPP parcel with a stand of ʻōhiʻa worth building around. Looking for a licensed architect or structural engineer to turn this concept into stamped, Hawai&#8216;i&#8209;County&#8209;permittable plans.</p>
+    <a class="hero-cta" href="mailto:ciro@kilaueaconstruction.com">Submit interest &nbsp;&rarr;</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="wishlist">
+    <div class="section-head">
+      <h2>What we're after</h2>
+      <span class="section-sub">Design wish list</span>
+    </div>
+    <div class="wishlist">
+      <div class="wish">
+        <span class="icon">&#9651;</span>
+        <h4>Loft</h4>
+        <p>Sleeping and storage space up top &mdash; keep the footprint small without giving up livable room.</p>
+      </div>
+      <div class="wish">
+        <span class="icon">&#9633;</span>
+        <h4>Lanai</h4>
+        <p>A covered porch that blends tiny-house efficiency with an outdoor-living feel &mdash; not just a box with a door.</p>
+      </div>
+      <div class="wish">
+        <span class="icon">&#8981;</span>
+        <h4>Practical, not tiny-for-tiny's-sake</h4>
+        <p>Small enough to build and rent efficiently, large enough to satisfy lender square-footage minimums.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="constraints">
+    <div class="section-head">
+      <h2>Constraints to design around</h2>
+      <span class="section-sub">Non-negotiable</span>
+    </div>
+    <table class="spec">
+      <thead><tr><th>Constraint</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Zoning</td><td>AG&#8209;1, agricultural &mdash; two units planned on one lot</td></tr>
+        <tr><td>Lender minimum</td><td>~400&#8211;500 sq ft per unit (final figure pending written lender confirmation)</td></tr>
+        <tr><td>Site</td><td>Flat lot; ʻōhiʻa trees on site to be preserved, not cleared</td></tr>
+        <tr><td>Clearing footprint</td><td>Driveway + one pad per unit only &mdash; no full-lot clear-cut</td></tr>
+        <tr><td>Financing type</td><td>DSCR / construction-to-permanent, non-owner-occupied rental use</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="direction">
+    <div class="section-head">
+      <h2>Construction direction</h2>
+      <span class="section-sub">Open question</span>
+    </div>
+    <div class="direction">
+      <p><strong>Shell type is still open.</strong> Reference material below includes a container-based build, but a conventional stick-built structure is equally on the table &mdash; part of what we're looking for from bidders is a recommendation on which suits this site and budget better.</p>
+      <p>Interior direction leans toward <strong>space-saving, multi-function furniture</strong> to make the most of a small footprint, rather than fixed built-ins throughout.</p>
+    </div>
+  </section>
+
+  <section id="refs">
+    <div class="section-head">
+      <h2>Reference material</h2>
+      <span class="section-sub">Owner-sourced, for inspiration only</span>
+    </div>
+    <div class="refs">
+      <a class="ref" href="https://youtu.be/9_43jFjkv4w" target="_blank" rel="noopener">
+        <span class="num">01</span>
+        <div>
+          <h4>Container house</h4>
+          <p>Efficient layout, loft, windows, front patio/deck.</p>
+          <div class="tags"><span>container build</span><span>loft</span><span>deck</span></div>
+        </div>
+        <span class="arrow">watch &rarr;</span>
+      </a>
+      <a class="ref" href="https://youtu.be/SzHPic4mr48" target="_blank" rel="noopener">
+        <span class="num">02</span>
+        <div>
+          <h4>Tiny house concept</h4>
+          <p>Additional layout reference.</p>
+          <div class="tags"><span>tiny house</span></div>
+        </div>
+        <span class="arrow">watch &rarr;</span>
+      </a>
+      <a class="ref" href="https://youtu.be/ODqL41pAVZY" target="_blank" rel="noopener">
+        <span class="num">03</span>
+        <div>
+          <h4>Smart furniture concept</h4>
+          <p>Space-saving, multi-function interior furniture ideas.</p>
+          <div class="tags"><span>interior</span><span>furniture</span></div>
+        </div>
+        <span class="arrow">watch &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="scope">
+    <div class="section-head">
+      <h2>What we need from bidders</h2>
+    </div>
+    <table class="spec">
+      <thead><tr><th>Deliverable</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Past projects</td><td>Similar-scale residential or ADU work, Hawai&#8216;i County permitting experience preferred</td></tr>
+        <tr><td>Timeline</td><td>Estimated turnaround for a stamped set, from kickoff to permit-ready</td></tr>
+        <tr><td>Bid</td><td>Fixed fee or hourly, whichever you typically work in</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<footer>Kilauea Construction LLC &middot; 15&#8209;1653 8th Ave, Keaau, HI &middot; contact <a href="mailto:ciro@kilaueaconstruction.com">ciro@kilaueaconstruction.com</a></footer>
+
+</body>
+</html>
